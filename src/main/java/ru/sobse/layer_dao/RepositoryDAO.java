@@ -1,47 +1,30 @@
 package ru.sobse.layer_dao;
 
 import com.zaxxer.hikari.HikariDataSource;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.jdbc.core.RowMapper;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import javax.sql.DataSource;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.List;
 
 @Repository
 public class RepositoryDAO {
 
-    private final NamedParameterJdbcTemplate jdbcTemplate;
-    private final String queryCustomerProducts;
+    @PersistenceContext
+    private final EntityManager entityManager;
 
-    public RepositoryDAO(NamedParameterJdbcTemplate jdbcTemplate, HikariDataSource dataSource) {
-        this.jdbcTemplate = jdbcTemplate;
-
-        queryCustomerProducts = read("customer_products.sql");
+    public RepositoryDAO(NamedParameterJdbcTemplate jdbcTemplate, HikariDataSource dataSource, EntityManager entityManager) {
+        this.entityManager = entityManager;
     }
 
     public List<String> fetchProduct(String nameCustomer) {
-        Map<String, Object> queryParams = new HashMap<>();
-        queryParams.put("name", nameCustomer);
 
-        return jdbcTemplate.query(queryCustomerProducts,
-                queryParams,
-                ((rs, rowNum) -> {return rs.getString("product_name");}));
+        String query = "select o.product_name  from Orders o where lower(customer.name) = lower(:name)";
+        return  entityManager.createQuery(query, String.class)
+                .setParameter("name", nameCustomer)
+                .getResultList();
+
     }
 
-    private static String read(String scriptFileName) {
-        try (InputStream is = new ClassPathResource(scriptFileName).getInputStream()) {
-            try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(is))) {
-                return bufferedReader.lines().collect(Collectors.joining("\n"));
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
 }
