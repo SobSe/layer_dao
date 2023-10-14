@@ -20,7 +20,7 @@ public class RepositoryDAO {
 
     public List<String> fetchProduct(String nameCustomer) {
 
-        String query = "select o.product_name  from CustomerOrder o where lower(Customer.name) = lower(:name)";
+        String query = "select o.productName  from CustomerOrder o where lower(customer.name) = lower(:name)";
         return  entityManager.createQuery(query, String.class)
                 .setParameter("name", nameCustomer)
                 .getResultList();

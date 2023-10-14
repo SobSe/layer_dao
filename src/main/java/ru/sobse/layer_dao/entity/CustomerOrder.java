@@ -12,8 +12,8 @@ public class CustomerOrder {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private LocalDate date;
-    @Column(length = 100)
-    private String product_name;
+    @Column(name = "product_name", length = 100)
+    private String productName;
     private int amount;
     @ManyToOne
     @JoinColumn(name = "customer_id")
@@ -38,12 +38,12 @@ public class CustomerOrder {
         this.date = date;
     }
 
-    public String getProduct_name() {
-        return product_name;
+    public String getProductName() {
+        return productName;
     }
 
-    public void setProduct_name(String product_name) {
-        this.product_name = product_name;
+    public void setProductName(String productName) {
+        this.productName = productName;
     }
 
     public int getAmount() {

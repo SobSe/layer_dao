@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name = "customers")
+@Table(name = "customers", schema = "public")
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,8 +15,8 @@ public class Customer {
     @Column(length = 50)
     private String surname;
     private int age;
-    @Column(length = 11)
-    private String phone_number;
+    @Column(name = "phone_number", length = 11)
+    private String phoneNumber;
 
     public Customer() {
     }
@@ -53,12 +53,12 @@ public class Customer {
         this.age = age;
     }
 
-    public String getPhone_number() {
-        return phone_number;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setPhone_number(String phone_number) {
-        this.phone_number = phone_number;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     @Override
