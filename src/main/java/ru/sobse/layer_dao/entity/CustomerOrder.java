@@ -1,15 +1,13 @@
-package ru.sobse.layer_dao.Entity;
+package ru.sobse.layer_dao.entity;
 
 import jakarta.persistence.*;
 
-import java.sql.Timestamp;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.Objects;
 
 @Entity
 @Table(name = "orders", schema = "public")
-public class Orders {
+public class CustomerOrder {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -19,9 +17,9 @@ public class Orders {
     private int amount;
     @ManyToOne
     @JoinColumn(name = "customer_id")
-    private Customers customer;
+    private Customer customer;
 
-    public Orders() {
+    public CustomerOrder() {
     }
 
     public int getId() {
@@ -56,11 +54,11 @@ public class Orders {
         this.amount = amount;
     }
 
-    public Customers getCustomer() {
+    public Customer getCustomer() {
         return customer;
     }
 
-    public void setCustomer(Customers customer) {
+    public void setCustomer(Customer customer) {
         this.customer = customer;
     }
 
@@ -68,7 +66,7 @@ public class Orders {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Orders orders = (Orders) o;
+        CustomerOrder orders = (CustomerOrder) o;
         return id == orders.id;
     }
 

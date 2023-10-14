@@ -1,6 +1,7 @@
-package ru.sobse.layer_dao;
+package ru.sobse.layer_dao.service;
 
 import org.springframework.stereotype.Service;
+import ru.sobse.layer_dao.repository.RepositoryDAO;
 
 import java.util.List;
 

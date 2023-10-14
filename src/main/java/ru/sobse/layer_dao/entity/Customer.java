@@ -1,11 +1,12 @@
-package ru.sobse.layer_dao.Entity;
+package ru.sobse.layer_dao.entity;
 
 import jakarta.persistence.*;
 
 import java.util.Objects;
 
 @Entity
-public class Customers {
+@Table(name = "customers")
+public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -17,7 +18,7 @@ public class Customers {
     @Column(length = 11)
     private String phone_number;
 
-    public Customers() {
+    public Customer() {
     }
 
     public int getId() {
@@ -64,7 +65,7 @@ public class Customers {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Customers customers = (Customers) o;
+        Customer customers = (Customer) o;
         return id == customers.id;
     }
 
